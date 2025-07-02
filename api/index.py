@@ -162,7 +162,7 @@ async def create_group_from_json_request(json_data_str: str):
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
         self.send_response(200)
-        self.send_header('Content-type', 'text/plain')
+        self.send_header('Content-type', 'application/json')
         self.end_headers()
         content_length = int(self.headers.get('Content-Length', 0))
         post_body = self.rfile.read(content_length)
