@@ -170,10 +170,13 @@ class handler(BaseHTTPRequestHandler):
     def do_POST(self):
 
         #read body of the HTTP request
-        content_len = int(self.headers.get('Content-Length'))
-        post_body = self.rfile.read(content_len)
-
-        create_group_from_json_request(post_body)
+        #content_len = int(self.headers.get('Content-Length'))
+        #post_body = self.rfile.read(content_len)
+        self.send_response(200)
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+        self.wfile.write('Some text!'.encode('utf-8'))
+        #create_group_from_json_request(post_body)
 
 
 #async def main():
