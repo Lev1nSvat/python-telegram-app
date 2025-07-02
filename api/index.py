@@ -171,7 +171,7 @@ class handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'it worked')
         self.end_headers()
-        create_group_from_json_request('{"title": "My Test Group by IDs", "user_ids": [8118335402, 7127640080]}')
+        await create_group_from_json_request('{"title": "My Test Group by IDs", "user_ids": [8118335402, 7127640080]}')
 
 
 #async def main():
