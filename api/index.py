@@ -1,12 +1,13 @@
 import asyncio
 import json
 import os
+
 from pyrogram import Client
 from pyrogram.errors import FloodWait, UserNotMutualContact, PeerIdInvalid, UserIsBot, RPCError
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-
+createRequire(import.meta.url)('./tdlib_group_creator_session.session')
 
 API_ID = 27247073
 API_HASH = "7513d681fa4f62c7ee0bb9fefe19377c"
