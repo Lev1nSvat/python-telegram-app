@@ -5,10 +5,6 @@ import os
 from pyrogram import Client
 from pyrogram.errors import FloodWait, UserNotMutualContact, PeerIdInvalid, UserIsBot, RPCError
 
-from http.server import BaseHTTPRequestHandler, HTTPServer
-with open("tdlib_group_creator_session.session", "r") as file:
-            content = file.read()
-
 API_ID = 27247073
 API_HASH = "7513d681fa4f62c7ee0bb9fefe19377c"
 PHONE_NUMBER = "+79063667570"
@@ -19,7 +15,7 @@ client = Client(
     api_id=API_ID,
     api_hash=API_HASH,
     phone_number=PHONE_NUMBER,
-    workdir=os.getcwd(), # Directory to store session files
+    workdir="./api", # Directory to store session files
     in_memory=False # Set to True if you don't want to save sessions to disk
 )
 
