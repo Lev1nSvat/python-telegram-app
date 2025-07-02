@@ -19,7 +19,7 @@ client = Client(
     api_hash=API_HASH,
     phone_number=PHONE_NUMBER,
     workdir="../", # Directory to store session files
-    #in_memory=False # Set to True if you don't want to save sessions to disk
+    in_memory=False # Set to True if you don't want to save sessions to disk
 )
 
 async def create_group_from_json_request(json_data_str: str):
@@ -169,11 +169,9 @@ class handler(BaseHTTPRequestHandler):
         return
     def do_POST(self):
         self.send_response(200)
-        self.send_header('Content-type', 'text/plain some random type')
+        self.send_header('Content-type', 'it worked')
         self.end_headers()
-        print("The request string:")
-        print(self.headers.get(contents))
-        create_group_from_json_request(self.headers.get(contents))
+        create_group_from_json_request('{"title": "My Test Group by IDs", "user_ids": [8118335402, 7127640080]}')
 
 
 #async def main():
