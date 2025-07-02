@@ -18,7 +18,7 @@ client = Client(
     api_id=API_ID,
     api_hash=API_HASH,
     phone_number=PHONE_NUMBER,
-    session_string="AgGfweEAcbMXOb_QFmnl4Y_HFIkFXYUmCtclRa4Ib-OX1Vkcy2DI4qVcV9AuFPv0gMGTWUTstbVt2zSaH4Tx5mNm_8tUN8zECC_DDfnuJDs52lm529RJ4F6riWEyNxER2nBIccW3fON-rhqac5_12AjKE_K4NQlgAiv0l430pCTEyjno-EfBPRxqGRKGXnkAx_U8GWUjb06v0tdCIvn7j5p0w3mm7hSXGFA_L4tZNxBI9102I-OujCVe94f-scR37Ni0m-bPOEcOybawwWsJ8CceuemwlosWjpf3heqsej8ymJzNlMN4ThrUSL2aLjkxmpiAv30NwmkhPSmcQpTsdrZmgjLIhwAAAAB28DzqAA",
+    session_string="AgGfweEAayqHWE73uLGHeQy5x9E8jAugnjThasWNRUjsFhzJOvXXbqW5RxQ4Vyg_3ZIB_fQdHcc_4ktJF-U4f1fIGCyVMbmybi_VfU1OnhYLpOPrfWfiWECpsFRfPLZtr2q9mzJv7GnAOQtifksc3A_u9r6KrF7t8pDi29fIPiXBgc48WJx0tL0JVmyRS_-cntBKy95O2f5HNDwMc67v5oqsVzv4_eCfEvD50VMDuhPqAqtR7h-Jtx1B9M5EudS0Shf4tsE3nA8SgsvWNg71tHoKOYHOmfeiBbjuqKB9QBBSSZ9sGACtg5Jsq17qKgISjfWoHQfUdWS1PHiIVjOubmSG8iwMkgAAAAB28DzqAA",
     in_memory=True # Set to True if you don't want to save sessions to disk
 )
 
