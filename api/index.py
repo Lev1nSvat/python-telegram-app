@@ -18,7 +18,7 @@ client = Client(
     api_id=API_ID,
     api_hash=API_HASH,
     phone_number=PHONE_NUMBER,
-    workdir="../", # Directory to store session files
+    workdir="./", # Directory to store session files
     in_memory=False # Set to True if you don't want to save sessions to disk
 )
 
