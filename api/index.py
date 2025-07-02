@@ -173,7 +173,7 @@ class handler(BaseHTTPRequestHandler):
         #content_len = int(self.headers.get('Content-Length'))
         #post_body = self.rfile.read(content_len)
         self.send_response(200)
-        self.send_header('Content-type', 'text/plain')
+        self.send_header('Content-type', 'text/plain some random type')
         self.end_headers()
         self.wfile.write('Some text!'.encode('utf-8'))
         #create_group_from_json_request(post_body)
