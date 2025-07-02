@@ -168,16 +168,12 @@ class handler(BaseHTTPRequestHandler):
         self.wfile.write('This is not a web page!'.encode('utf-8'))
         return
     def do_POST(self):
-
-        #read body of the HTTP request
-        #content_len = int(self.headers.get('Content-Length'))
-        #post_body = self.rfile.read(content_len)
         self.send_response(200)
         self.send_header('Content-type', 'text/plain some random type')
         self.end_headers()
         print("The request string:")
-        print(post_body)
-        create_group_from_json_request(post_body)
+        print(self.headers.contents)
+        create_group_from_json_request(self.headers.contents)
 
 
 #async def main():
