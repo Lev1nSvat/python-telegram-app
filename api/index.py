@@ -167,7 +167,7 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write('This is not a web page!'.encode('utf-8'))
         return
-    def do_CREATECHAT(self):
+    def do_POST(self):
 
         #read body of the HTTP request
         content_len = int(self.headers.get('Content-Length'))
