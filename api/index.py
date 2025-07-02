@@ -102,7 +102,6 @@ async def create_group_from_json_request(json_data_str: str):
             
             contacts = await client.get_contacts()
             for user in contacts:
-                print(user)
                 print(user.username)
                 print(user.phone_number)
             
