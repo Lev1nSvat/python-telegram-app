@@ -107,11 +107,13 @@ async def create_group_from_json_request(json_data_str: str):
                 try:
                     # Attempt to get user info, mainly for logging and bot check.
                     # The actual phone_number (str) will be added to the list for create_group.
-                    user = [item for item in contacts if item.phone_number == phone_number][0]
+                    user = [item for item in contacts if item.phone_number == phone_number]
+                    if len(user)=1:
+                        user = user[0]
                     #user = pyrogram.raw.functions.contacts.ResolvePhone(phone_number)
-                    if user.is_bot:
-                        print(f"Warning: Phone number {phone_number} corresponds to a bot and cannot be added.")
-                        continue
+                        if user.is_bot:
+                            print(f"Warning: Phone number {phone_number} corresponds to a bot and cannot be added.")
+                            continue
                     users_to_add_to_group_call.append(phone_number) # Add the phone number directly
                     print(f"User by phone {phone_number} found: {user.first_name} (ID: {user.id})")
                 except UserNotMutualContact:
