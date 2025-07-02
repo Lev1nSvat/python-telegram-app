@@ -101,9 +101,6 @@ async def create_group_from_json_request(json_data_str: str):
         if phone_numbers_to_add:
             
             contacts = await client.get_contacts()
-            for user in contacts:
-                print(user.username)
-                print(user.phone_number)
             
             print(f"Validating {len(phone_numbers_to_add)} phone numbers...")
             for phone_number in phone_numbers_to_add:
