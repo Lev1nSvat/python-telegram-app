@@ -160,18 +160,14 @@ async def create_group_from_json_request(json_data_str: str):
 
 
 class handler(BaseHTTPRequestHandler):
-    #create_group_from_json_request()
-    def do_GET(self):
+    def do_POST(self):
         self.send_response(200)
         self.send_header('Content-type', 'text/plain')
         self.end_headers()
-        self.wfile.write('This is not a web page!'.encode('utf-8'))
-        return
-    def do_POST(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'it worked')
-        self.end_headers()
-        asyncio.run(create_group_from_json_request('{"title": "My Test Group by IDs", "user_ids": [8118335402, 7127640080]}'))
+        content_length = int(self.headers.get('Content-Length', 0))
+        post_body = self.rfile.read(content_length)
+        print(post_body)
+        #asyncio.run(create_group_from_json_request('{"title": "My Test Group by IDs", "user_ids": [8118335402, 7127640080]}'))
 
 
 #async def main():
