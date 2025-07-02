@@ -1,3 +1,1 @@
-json
-pyrogram
-http
+pyrogram==2.0.106
