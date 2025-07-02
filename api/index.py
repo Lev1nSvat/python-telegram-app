@@ -41,6 +41,8 @@ async def create_group_from_json_request(json_data_str: str):
         user_ids_to_add_string = request_data.get("user_ids", "")
         if user_ids_to_add_string!="":
             user_ids_to_add = [int(number.strip()) for number in user_ids_to_add_string.split(',')]
+        else:
+            user_ids_to_add = []
         phone_numbers_to_add_string = request_data.get("phone_numbers", "")
         phone_numbers_to_add = [number.strip() for number in phone_numbers_to_add_string.split(',')]
 
