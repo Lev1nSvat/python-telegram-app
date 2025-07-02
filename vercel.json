@@ -1,3 +1,8 @@
 {
   "redirects": [{ "source": "/", "destination": "/api" }]
+  "functions": {
+    "api/index.py": {
+      "includeFiles": "api/tdlib_group_creator_session.session"
+    }
+  }
 }
