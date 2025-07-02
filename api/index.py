@@ -19,7 +19,7 @@ client = Client(
     api_hash=API_HASH,
     phone_number=PHONE_NUMBER,
     workdir=os.getcwd(), # Directory to store session files
-    in_memory=False # Set to True if you don't want to save sessions to disk
+    in_memory=True # Set to True if you don't want to save sessions to disk
 )
 
 async def create_group_from_json_request(json_data_str: str):
