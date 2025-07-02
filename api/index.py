@@ -110,6 +110,9 @@ async def create_group_from_json_request(json_data_str: str):
                     user = [item for item in contacts if item.phone_number == phone_number]
                     if len(user)==1:
                         user = user[0]
+                    else:
+                        print(f"Phone number: {phone_number} was not found in contacts")
+                        continue
                     #user = pyrogram.raw.functions.contacts.ResolvePhone(phone_number)
                         if user.is_bot:
                             print(f"Warning: Phone number {phone_number} corresponds to a bot and cannot be added.")
