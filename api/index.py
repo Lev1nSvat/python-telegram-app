@@ -167,7 +167,7 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write('This is not a web page!'.encode('utf-8'))
         return
-    def do_POST(self):
+    async def do_POST(self):
         self.send_response(200)
         self.send_header('Content-type', 'it worked')
         self.end_headers()
