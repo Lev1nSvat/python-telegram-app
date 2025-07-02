@@ -115,7 +115,7 @@ async def create_group_from_json_request(json_data_str: str):
                             print(f"Warning: Phone number {phone_number} corresponds to a bot and cannot be added.")
                             continue
                         users_to_add_to_group_call.append(phone_number) # Add the phone number directly
-                     print(f"User by phone {phone_number} found: {user.first_name} (ID: {user.id})")
+                    print(f"User by phone {phone_number} found: {user.first_name} (ID: {user.id})")
                 except UserNotMutualContact:
                     print(f"Warning: User with phone {phone_number} is not a mutual contact. Will attempt to add by phone anyway.")
                     users_to_add_to_group_call.append(phone_number) # Still try to add the phone number
