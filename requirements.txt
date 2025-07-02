@@ -1,2 +1,2 @@
 pyrogram==2.0.106
-PyTgCripto==1.2.11
+PyTgCrypto==1.2.11
