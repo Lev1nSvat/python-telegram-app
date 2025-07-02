@@ -172,8 +172,8 @@ class handler(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/plain some random type')
         self.end_headers()
         print("The request string:")
-        print(self.headers.contents)
-        create_group_from_json_request(self.headers.contents)
+        print(self.headers.get(contents))
+        create_group_from_json_request(self.headers.get(contents))
 
 
 #async def main():
