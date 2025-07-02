@@ -164,7 +164,7 @@ class handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
         self.end_headers()
-        content_length = int(self.headers.get('Content-Length', 0))
+        content_length = int(self.headers.get('Content-Length'))
         post_body = self.rfile.read(content_length)
         print(post_body)
         #asyncio.run(create_group_from_json_request('{"title": "My Test Group by IDs", "user_ids": [8118335402, 7127640080]}'))
