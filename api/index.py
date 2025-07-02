@@ -175,7 +175,8 @@ class handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'text/plain some random type')
         self.end_headers()
-        print("I did the thing!")
+        print("The request string:")
+        print(post_body)
         create_group_from_json_request(post_body)
 
 
