@@ -167,11 +167,11 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write('This is not a web page!'.encode('utf-8'))
         return
-    async def do_POST(self):
+    def do_POST(self):
         self.send_response(200)
         self.send_header('Content-type', 'it worked')
         self.end_headers()
-        await create_group_from_json_request('{"title": "My Test Group by IDs", "user_ids": [8118335402, 7127640080]}')
+        asyncio.run(create_group_from_json_request('{"title": "My Test Group by IDs", "user_ids": [8118335402, 7127640080]}'))
 
 
 #async def main():
