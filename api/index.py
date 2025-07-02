@@ -113,6 +113,7 @@ async def create_group_from_json_request(json_data_str: str):
                     user = [item for item in contacts if item.phone_number == phone_number]
                     if len(user)==1:
                         user = user[0]
+                        users_to_add_to_group_call.append(phone_number)
                     else:
                         print(f"Phone number: {phone_number} was not found in contacts")
                         continue
@@ -120,7 +121,6 @@ async def create_group_from_json_request(json_data_str: str):
                         if user.is_bot:
                             print(f"Warning: Phone number {phone_number} corresponds to a bot and cannot be added.")
                             continue
-                        users_to_add_to_group_call.append(phone_number) # Add the phone number directly
                     print(f"User by phone {phone_number} found: {user.first_name} (ID: {user.id})")
                 except UserNotMutualContact:
                     print(f"Warning: User with phone {phone_number} is not a mutual contact. Will attempt to add by phone anyway.")
