@@ -175,9 +175,8 @@ class handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'text/plain some random type')
         self.end_headers()
-        self.wfile.write('Some text!'.encode('utf-8'))
         print("I did the thing!")
-        #create_group_from_json_request(post_body)
+        create_group_from_json_request(post_body)
 
 
 #async def main():
