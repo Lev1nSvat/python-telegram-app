@@ -160,7 +160,7 @@ async def create_group_from_json_request(json_data_str: str):
                 users_in_chat.append(item)
             users_names = ""
             for item in users_in_chat:
-                #try:
+                try:
                     users_names += item.username + ", "
                 except:
                     #users_names += "*имя не найдено*, "
