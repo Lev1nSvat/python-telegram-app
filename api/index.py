@@ -7,7 +7,6 @@ from pyrogram.errors import FloodWait, UserNotMutualContact, PeerIdInvalid, User
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-
 API_ID = 27247073
 API_HASH = "7513d681fa4f62c7ee0bb9fefe19377c"
 PHONE_NUMBER = "+79063667570"
@@ -19,8 +18,9 @@ client = Client(
     api_hash=API_HASH,
     phone_number=PHONE_NUMBER,
     session_string="AgGfweEAQcSeaxPmEHZwaKbXEi4gHa8_DfHTRcIWAsTIewdx2aVmcQkO2OAATeYFUzMECs4CtOg7-8mtVZMLUR55JaN4W6Jn2o3P-bf4X3vhQ0RTt09mXsqdYxj1FwOHtTeovYgPaA5jmUSVXr7yyKgYIrCxeqRfG9mE4kkXNe2xWcCkrTT18tSxXBHvmKAqaCxYhKHSKCXpOtb71OcV02W-n8jCc9s6t1pXF1tLrYRGKeKo35n3hjoHFrFDJNWpaQ2hFPfyXhuv3pQ7NoEXSjbMczWbc_JzUwnWokUmxSh44UXY-7v-KsZQclzHxGZATwrd2otL2iBxdM4u8Qw7UiqeBM1dUAAAAAB28DzqAA",
-    in_memory=True # Set to True if you don't want to save sessions to disk
+    in_memory=True  # Set to True if you don't want to save sessions to disk
 )
+
 
 async def create_group_from_json_request(json_data_str: str):
     """
@@ -39,7 +39,7 @@ async def create_group_from_json_request(json_data_str: str):
         request_data = json.loads(json_data_str)
         group_title = request_data.get("title")
         user_ids_to_add_string = request_data.get("user_ids", "")
-        if user_ids_to_add_string!="":
+        if user_ids_to_add_string != "":
             user_ids_to_add = [int(number.strip()) for number in user_ids_to_add_string.split(',')]
         else:
             user_ids_to_add = []
@@ -62,7 +62,8 @@ async def create_group_from_json_request(json_data_str: str):
             print("Error: 'phone_numbers' must be a list of strings.")
             return {"status": "error", "message": "Invalid 'phone_numbers' format."}
 
-        print(f"Request received: Title='{group_title}', User IDs={user_ids_to_add}, Phone Numbers={phone_numbers_to_add}")
+        print(
+            f"Request received: Title='{group_title}', User IDs={user_ids_to_add}, Phone Numbers={phone_numbers_to_add}")
 
         # Start the Pyrogram client
         print("Starting Pyrogram client...")
@@ -74,6 +75,8 @@ async def create_group_from_json_request(json_data_str: str):
         # The create_group method can handle these primitive types directly.
         users_to_add_to_group_call = []
 
+        er_log = []
+
         # Process user IDs
         if user_ids_to_add:
             print(f"Validating {len(user_ids_to_add)} user IDs...")
@@ -83,55 +86,63 @@ async def create_group_from_json_request(json_data_str: str):
                     # The actual user_id (int) will be added to the list for create_group.
                     user = await client.get_users(user_id)
                     if user.is_bot:
-                        print(f"Warning: User ID {user_id} is a bot and cannot be added to a basic group by this method.")
+                        print(
+                            f"Warning: User ID {user_id} is a bot and cannot be added to a basic group by this method.")
+                        er_log.append(
+                            f"Warning: User ID {user_id} is a bot and cannot be added to a basic group by this method.")
                         continue
-                    users_to_add_to_group_call.append(user_id) # Add the ID directly
+                    users_to_add_to_group_call.append(user_id)  # Add the ID directly
                     print(f"User by ID {user_id} found: {user.first_name}")
                 except UserNotMutualContact:
                     print(f"Warning: User ID {user_id} is not a mutual contact. Will attempt to add by ID anyway.")
-                    users_to_add_to_group_call.append(user_id) # Still try to add the ID
+                    er_log.append(
+                        f"Warning: User ID {user_id} is not a mutual contact. Will attempt to add by ID anyway.")
+                    users_to_add_to_group_call.append(user_id)  # Still try to add the ID
                 except PeerIdInvalid:
                     print(f"Error: User ID {user_id} is invalid or does not exist.")
+                    er_log.append(f"Error: User ID {user_id} is invalid or does not exist.")
                 except RPCError as e:
                     print(f"Error getting user {user_id}: {e}")
+                    er_log.append(f"Error getting user {user_id}: {e}")
                 except Exception as e:
                     print(f"An unexpected error occurred while fetching user {user_id}: {e}")
+                    er_log.append(f"An unexpected error occurred while fetching user {user_id}: {e}")
 
         # Process phone numbers
         if phone_numbers_to_add:
-            
+
             contacts = await client.get_contacts()
-            
+
             print(f"Validating {len(phone_numbers_to_add)} phone numbers...")
             for phone_number in phone_numbers_to_add:
                 try:
                     # Attempt to get user info, mainly for logging and bot check.
                     # The actual phone_number (str) will be added to the list for create_group.
                     user = [item for item in contacts if item.phone_number == phone_number]
-                    if len(user)==1:
+                    if len(user) == 1:
                         user = user[0]
                         users_to_add_to_group_call.append(phone_number)
                     else:
                         print(f"Phone number: {phone_number} was not found in contacts")
+                        er_log.append(f"Phone number: {phone_number} was not found in contacts")
                         continue
-                    #user = pyrogram.raw.functions.contacts.ResolvePhone(phone_number)
-                        if user.is_bot:
-                            print(f"Warning: Phone number {phone_number} corresponds to a bot and cannot be added.")
-                            continue
+
                     print(f"User by phone {phone_number} found: {user.first_name} (ID: {user.id})")
                 except UserNotMutualContact:
-                    print(f"Warning: User with phone {phone_number} is not a mutual contact. Will attempt to add by phone anyway.")
-                    users_to_add_to_group_call.append(phone_number) # Still try to add the phone number
+                    print(
+                        f"Warning: User with phone {phone_number} is not a mutual contact. Will attempt to add by phone anyway.")
+                    users_to_add_to_group_call.append(phone_number)  # Still try to add the phone number
                 except PeerIdInvalid:
-                     print(f"Error: Phone number {phone_number} is invalid or does not exist.")
+                    print(f"Error: Phone number {phone_number} is invalid or does not exist.")
                 except RPCError as e:
-                     print(f"Error getting user by phone {phone_number}: {e}")
+                    print(f"Error getting user by phone {phone_number}: {e}")
                 except Exception as e:
-                     print(f"An unexpected error occurred while fetching user by phone {phone_number}: {e}")
+                    print(f"An unexpected error occurred while fetching user by phone {phone_number}: {e}")
 
         if not users_to_add_to_group_call:
             print("Error: No valid users found from provided IDs or phone numbers to create the group with.")
-            return {"status": "error", "message": "No valid users to add to the group."}
+            er_log.append("Error: No valid users found from provided IDs or phone numbers to create the group with.")
+            # return {"status": "error", "message": "No valid users to add to the group."}
 
         # Create the group chat
         print(f"Attempting to create group '{group_title}' with {len(users_to_add_to_group_call)} participants...")
@@ -140,9 +151,22 @@ async def create_group_from_json_request(json_data_str: str):
             # By passing only these primitive types, we avoid potential binding issues with complex User objects.
             new_group = await client.create_group(
                 title=group_title,
-                users=users_to_add_to_group_call # Pass the list of raw IDs/phone numbers
+                users=users_to_add_to_group_call  # Pass the list of raw IDs/phone numbers
             )
             print(f"Group '{new_group.title}' (ID: {new_group.id}) created successfully!")
+            users_in_chat = client.get_chat_members(new_group.group_id)
+            users_names = ""
+            for item in users_in_chat:
+                try:
+                    users_names += item.first_name + ", "
+                except:
+                    users_names += "*имя не найдено*, "
+            users_names = users_names.strip()[:-1]
+            users_not_added = set(user_ids_to_add) + set(phone_numbers_to_add) - set(users_to_add_to_group_call)
+            if len(users_not_added) == 0:
+                await client.send_message(new_group.id, f"\N{Robot} Чат создан автоматически, пригашённые пользователи: {users_names}. Все запрашиваемые пользователи были найдены.",disable_notification=True)
+            else:
+                await client.send_message(new_group.id,f"\N{Robot} Чат создан автоматически, пригашённые пользователи: {", ".join(users_to_add_to_group_call)}({users_names}).Пользователи {", ".join(users_not_added)} не найдены.Лог ошибок: {"\n".join(er_log)}", disable_notification=True)
             return {
                 "status": "success",
                 "message": "Group created successfully!",
@@ -175,29 +199,27 @@ async def create_group_from_json_request(json_data_str: str):
 
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.end_headers()
         content_length = int(self.headers.get('Content-Length'))
         post_body = self.rfile.read(content_length)
         print("body of a request:")
         print(post_body)
-        asyncio.run(create_group_from_json_request(post_body))
+        self.send_response(200)
+        self.send_header('functionResult', asyncio.run(create_group_from_json_request(post_body)))
+        self.end_headers()
+
+# async def main():
+# Call the function that processes the request
+
+# result = await create_group_from_json_request(sample_json_request)
+# print("\n--- Result ---")
+# print(json.dumps(result, indent=4))
 
 
-#async def main():
-    # Call the function that processes the request
-
-    #result = await create_group_from_json_request(sample_json_request)
-    #print("\n--- Result ---")
-    #print(json.dumps(result, indent=4))
-
-
-#if __name__ == "__main__":
-    # Ensure a proper event loop is running for async operations
- #   try:
-  #      asyncio.run(main())
- #   except KeyboardInterrupt:
-  #      print("Operation cancelled by user.")
- #   except Exception as e:
- #       print(f"An error occurred during main execution: {e}")
+# if __name__ == "__main__":
+# Ensure a proper event loop is running for async operations
+#   try:
+#      asyncio.run(main())
+#   except KeyboardInterrupt:
+#      print("Operation cancelled by user.")
+#   except Exception as e:
+#       print(f"An error occurred during main execution: {e}")
