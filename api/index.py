@@ -18,7 +18,6 @@ client = Client(
     api_hash=API_HASH,
     phone_number=PHONE_NUMBER,
     session_string="AgGfweEAEPC6MGckZsP_n16mHkJeP4XUxq4zV-PluGCZYjevdudtNUzBtKfKmVUjCd_bL71-_SxY8hOsflRXm7PSJy8d39Dlq8ZW2kaAd-4dlPxs73lUQ9UXHQ0UE0JJFq2y6JaKri_yrWjPQbmFixtC7C_bs8nonVRNq4a40Iv0ME1JaTjFgDndj1hZ9WP8o_prg9_3mrbSVW-1OfwVwL852tDgz99EWpQ8KXCKWACJZHvnoZV-86RbF_8Vk9YwJ5_ZFhXYybjxfneo4e8ctGqAR_CNFPcogXGt8Xp6cmAPzTAPcGKn-TNWhufSycLUZfBNX1_cazg43IwS_EQAr8LB0s1Q3gAAAAB28DzqAA",
-Stopping",
     in_memory=True  # Set to True if you don't want to save sessions to disk
 )
 
