@@ -154,7 +154,7 @@ async def create_group_from_json_request(json_data_str: str):
                 users=users_to_add_to_group_call  # Pass the list of raw IDs/phone numbers
             )
             print(f"Group '{new_group.title}' (ID: {new_group.id}) created successfully!")
-            users_in_chat = client.get_chat_members(new_group.group_id)
+            users_in_chat = client.get_chat_members(new_group.id)
             users_names = ""
             for item in users_in_chat:
                 try:
@@ -163,10 +163,10 @@ async def create_group_from_json_request(json_data_str: str):
                     users_names += "*имя не найдено*, "
             users_names = users_names.strip()[:-1]
             users_not_added = set(user_ids_to_add) + set(phone_numbers_to_add) - set(users_to_add_to_group_call)
-            #if len(users_not_added) == 0:
-                #await client.send_message(new_group.id, f"\U0001F916 Чат создан автоматически, пригашённые пользователи: {users_names}. Все запрашиваемые пользователи были найдены.",disable_notification=True)
-            #else:
-                #await client.send_message(new_group.id,f"\U0001F916 Чат создан автоматически, пригашённые пользователи: {", ".join(users_to_add_to_group_call)}({users_names}).Пользователи {", ".join(users_not_added)} не найдены.Лог ошибок: {"\n".join(er_log)}", disable_notification=True)
+            if len(users_not_added) == 0:
+                await client.send_message(new_group.id, f"\U0001F916 Чат создан автоматически, пригашённые пользователи: {users_names}. Все запрашиваемые пользователи были найдены.",disable_notification=True)
+            else:
+                await client.send_message(new_group.id,f"\U0001F916 Чат создан автоматически, пригашённые пользователи: {", ".join(users_to_add_to_group_call)}({users_names}).Пользователи {", ".join(users_not_added)} не найдены.Лог ошибок: {"\n".join(er_log)}", disable_notification=True)
             return {
                 "status": "success",
                 "message": "Group created successfully!",
