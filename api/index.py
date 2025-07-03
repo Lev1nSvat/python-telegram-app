@@ -161,9 +161,9 @@ async def create_group_from_json_request(json_data_str: str):
             users_names = ""
             for item in users_in_chat:
                 try:
-                    users_names += item.username + ", "
+                    users_names += item.user.first_name + ", "
                 except:
-                    #users_names += "*имя не найдено*, "
+                    users_names += "*имя не найдено*, "
                     print(item)
             users_names = users_names.strip()[:-1]
             #users_not_added = set(user_ids_to_add).union(set(phone_numbers_to_add)).difference(set(users_to_add_to_group_call))
