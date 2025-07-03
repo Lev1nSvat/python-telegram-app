@@ -154,7 +154,7 @@ async def create_group_from_json_request(json_data_str: str):
                 users=users_to_add_to_group_call  # Pass the list of raw IDs/phone numbers
             )
             print(f"Group '{new_group.title}' (ID: {new_group.id}) created successfully!")
-            users_in_chat = client.get_chat_members(new_group.id)
+            users_in_chat = await client.get_chat_members(new_group.id)
             users_names = ""
             for item in users_in_chat:
                 try:
