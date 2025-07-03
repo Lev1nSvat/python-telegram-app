@@ -40,13 +40,27 @@ async def create_group_from_json_request(json_data_str: str):
         group_title = request_data.get("title")
         user_ids_to_add_string = request_data.get("user_ids", "")
         if user_ids_to_add_string != "":
-            user_ids_to_add = [int(number.strip()) for number in ",".split(user_ids_to_add_string)]
+            user_ids_to_add = [int(number.strip()) for number in user_ids_to_add_string.split(",")]
         else:
             user_ids_to_add = []
         phone_numbers_to_add_string = request_data.get("phone_numbers", "")
         phone_numbers_to_add = [number.strip() for number in phone_numbers_to_add_string.split(',')]
 
-        
+        if not group_title:
+            print("Error: Invalid JSON format. 'title' is required.")
+            return {"status": "error", "message": "Invalid request payload: 'title' missing."}
+
+        if not user_ids_to_add and not phone_numbers_to_add:
+            print("Error: Invalid JSON format. Either 'user_ids' or 'phone_numbers' must be provided.")
+            return {"status": "error", "message": "Invalid request payload: 'user_ids' or 'phone_numbers' missing."}
+
+        if user_ids_to_add and not isinstance(user_ids_to_add, list):
+            print("Error: 'user_ids' must be a list of integers.")
+            return {"status": "error", "message": "Invalid 'user_ids' format."}
+
+        if phone_numbers_to_add and not isinstance(phone_numbers_to_add, list):
+            print("Error: 'phone_numbers' must be a list of strings.")
+            return {"status": "error", "message": "Invalid 'phone_numbers' format."}
 
         print(
             f"Request received: Title='{group_title}', User IDs={user_ids_to_add}, Phone Numbers={phone_numbers_to_add}")
