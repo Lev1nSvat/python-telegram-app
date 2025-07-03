@@ -170,7 +170,6 @@ async def create_group_from_json_request(json_data_str: str):
             if len(users_not_added) == 0:
                 await client.send_message(new_group.id, f"\U0001F916 Чат создан автоматически, пригашённые пользователи: {users_names}. Все запрашиваемые пользователи были найдены.",disable_notification=True)
             else:
-                
                 await client.send_message(new_group.id,f"\U0001F916 Чат создан автоматически, пригашённые пользователи: {", ".join(map(str, users_to_add_to_group_call))}({users_names}).Пользователи {", ".join(map(str, users_not_added))} не найдены. Лог ошибок: {"\n".join(er_log)}", disable_notification=True)
             return {
                 "status": "success",
@@ -206,8 +205,6 @@ class handler(BaseHTTPRequestHandler):
     def do_POST(self):
         content_length = int(self.headers.get('Content-Length'))
         post_body = self.rfile.read(content_length)
-        print("body of a request:")
-        print(post_body)
         self.send_response(200)
         self.send_header('functionResult', asyncio.run(create_group_from_json_request(post_body)))
         self.end_headers()
