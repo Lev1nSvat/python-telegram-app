@@ -166,7 +166,7 @@ async def create_group_from_json_request(json_data_str: str):
                     users_names += "*имя не найдено*, "
                     print(item)
             users_names = users_names.strip()[:-1]
-            #users_not_added = set(user_ids_to_add).union(set(phone_numbers_to_add)).difference(set(users_to_add_to_group_call))
+            users_not_added = set(user_ids_to_add).union(set(phone_numbers_to_add)).difference(set(users_to_add_to_group_call))
             #if len(users_not_added) == 0:
             await client.send_message(new_group.id, f"\U0001F916 Чат создан автоматически, пригашённые пользователи: {users_names}. Все запрашиваемые пользователи были найдены.",disable_notification=True)
             #else:
