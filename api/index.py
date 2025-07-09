@@ -79,6 +79,7 @@ async def create_group_from_json_request(json_data_str: str):
 
         # Process user IDs
         if user_ids_to_add:
+            dialogs = client.get_dialogs()
             print(f"Validating {len(user_ids_to_add)} user IDs...")
             for user_id in user_ids_to_add:
                 try:
