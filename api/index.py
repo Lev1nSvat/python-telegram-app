@@ -206,8 +206,9 @@ class handler(BaseHTTPRequestHandler):
         content_length = int(self.headers.get('Content-Length'))
         post_body = self.rfile.read(content_length)
         self.send_response(200)
-        self.send_header('functionResult', asyncio.run(create_group_from_json_request(post_body)))
+        self.send_header('testHeader', "testHeaderContent")
         self.end_headers()
+        asyncio.run(create_group_from_json_request(post_body))
 
 # async def main():
 # Call the function that processes the request
