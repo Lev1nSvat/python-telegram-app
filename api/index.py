@@ -1,4 +1,5 @@
 import asyncio
+import threads
 import json
 import os
 import pyrogram
@@ -205,6 +206,12 @@ class handler(BaseHTTPRequestHandler):
     async def do_POST(self):
         content_length = int(self.headers.get('Content-Length'))
         post_body = self.rfile.read(content_length)
+        
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        result = loop.run_until_complete(asyncio.to_thread(create_group_from_json_request, post_body)
+        loop.close()
+        
         self.send_response(200)
         result = await create_group_from_json_request(post_body)
         self.send_header('testHeader', result)
