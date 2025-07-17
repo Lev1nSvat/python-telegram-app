@@ -207,7 +207,7 @@ class handler(BaseHTTPRequestHandler):
         post_body = self.rfile.read(content_length)
         self.send_response(200)
         result = await create_group_from_json_request(post_body)
-        self.send_header('testHeader', "res")
+        self.send_header('testHeader', result)
         self.end_headers()
 
 # async def main():
