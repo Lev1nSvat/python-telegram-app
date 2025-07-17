@@ -4,7 +4,7 @@ import json
 
 class handler(BaseHTTPRequestHandler):
     #async def do_GET(self):
-    def do_GET(self):
+    async def do_GET(self):
         # Simulate an asynchronous operation
         #await asyncio.sleep(0.5)
 
