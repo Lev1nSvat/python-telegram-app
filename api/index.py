@@ -1,4 +1,4 @@
-import request
+import requests
 import asyncio
 from http.server import BaseHTTPRequestHandler
 import json
