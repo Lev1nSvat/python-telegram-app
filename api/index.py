@@ -89,7 +89,7 @@ async def create_group_from_json_request(json_data_str: str):
                         print(
                             f"Warning: User ID {user_id} is a bot and cannot be added to a basic group by this method.")
                         #er_log.append(
-                            f"Warning: User ID {user_id} is a bot and cannot be added to a basic group by this method.")
+                            #f"Warning: User ID {user_id} is a bot and cannot be added to a basic group by this method.")
                         continue
                     users_to_add_to_group_call.append(user_id)  # Add the ID directly
                     print(f"User by ID {user_id} found: {user.first_name}")
