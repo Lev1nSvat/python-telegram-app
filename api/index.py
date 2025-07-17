@@ -209,7 +209,7 @@ class handler(BaseHTTPRequestHandler):
         
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-        result = loop.run_until_complete(asyncio.to_thread(create_group_from_json_request, post_body)
+        result = loop.run_until_complete(asyncio.to_thread(create_group_from_json_request, post_body))
         loop.close()
         
         self.send_response(200)
