@@ -1,3 +1,4 @@
+import request
 import asyncio
 from http.server import BaseHTTPRequestHandler
 import json
@@ -38,6 +39,7 @@ async def create_group_from_json_request(json_data_str: str):
         request_data = json.loads(json_data_str)
         group_title = request_data.get("title")
         user_ids_to_add_string = request_data.get("user_ids", "")
+        app_id = request_data.get("app_id")
         if user_ids_to_add_string != "":
             user_ids_to_add = [int(number.strip()) for number in user_ids_to_add_string.split(",")]
         else:
@@ -144,19 +146,53 @@ async def create_group_from_json_request(json_data_str: str):
                 users=users_to_add_to_group_call  # Pass the list of raw IDs/phone numbers
             )
             print(f"Group '{new_group.title}' (ID: {new_group.id}) created successfully!")
+
+            #send http post request to elma containing chat id
+            print("sending post request to elma")
+            url = f"https://jungheinrich.elma365.ru/pub/v1/app/remont_elektrokomponentov_test/doska_zayavoktest/{app_id}/update"
+            headers = {
+                "Authorization": "Bearer 3ed4629b-daf4-422d-9380-2369c0817e5f",
+                "Content-Type": "application/json"
+            }
+            payload = {
+                "context": {
+                    "id_telegram_chata": new_group.id
+                }
+            }
+            try:
+                # Send the POST request
+                response = requests.post(url, data=json.dumps(payload), headers=headers)
+
+                # Check for successful response (status code 200)
+                response.raise_for_status()
+
+                # Print the response content
+                print("Request successful!")
+                print(f"Status Code: {response.status_code}")
+                print(f"Response Body: {response.json()}")
+
+            except requests.exceptions.HTTPError as http_err:
+                print(f"HTTP error occurred: {http_err}")
+                print(f"Response Body: {response.text}")
+            except requests.exceptions.ConnectionError as conn_err:
+                print(f"Connection error occurred: {conn_err}")
+            except requests.exceptions.Timeout as timeout_err:
+                print(f"Timeout error occurred: {timeout_err}")
+            except requests.exceptions.RequestException as req_err:
+                print(f"An unexpected error occurred: {req_err}")
             #users_in_chat = await client.get_chat_members(new_group.id)
-            users_in_chat = []
-            async for item in client.get_chat_members(new_group.id):
-                users_in_chat.append(item)
-            users_names = ""
-            for item in users_in_chat:
-                try:
-                    users_names += item.user.first_name + ", "
-                except:
-                    users_names += "*имя не найдено*, "
-                    print(item)
-            users_names = users_names.strip()[:-1]
-            users_not_added = set(user_ids_to_add).union(set(phone_numbers_to_add)).difference(set(users_to_add_to_group_call))
+            #users_in_chat = []
+            #async for item in client.get_chat_members(new_group.id):
+                #users_in_chat.append(item)
+            #users_names = ""
+            #for item in users_in_chat:
+                #try:
+                    #users_names += item.user.first_name + ", "
+                #except:
+                    #users_names += "*имя не найдено*, "
+                    #print(item)
+            #users_names = users_names.strip()[:-1]
+            #users_not_added = set(user_ids_to_add).union(set(phone_numbers_to_add)).difference(set(users_to_add_to_group_call))
             #if len(users_not_added) == 0:
             #    await client.send_message(new_group.id, f"\U0001F916 Чат создан автоматически, пригашённые пользователи: {users_names}. Все запрашиваемые пользователи были найдены.",disable_notification=True)
             #else:
@@ -198,22 +234,12 @@ class handler(BaseHTTPRequestHandler):
         post_body = self.rfile.read(content_length)
 
         self.send_response(200)
-        #self.send_header('Content-type', 'application/json')
         self.send_header('Content-type', 'text/plain')
         self.end_headers()
-        #response_data = {"message": result}
-        #self.wfile.write(response_data).encode('utf-8')
         
-        #run the function BEFORE answering in a event loop
         print("Synchronous function: Calling async function...")
         result = asyncio.run(create_group_from_json_request(post_body))
         print(f"Synchronous function: Received result: {result}")
-        
-        self.send_response(200)
-        #self.send_header('Content-type', 'application/json')
-        self.send_header('Content-type', 'text/plain')
-        self.end_headers()
-        #response_data = {"message": result}
-        #self.wfile.write(response_data).encode('utf-8')
+
 
     # You can also add other HTTP methods like do_POST, do_PUT, etc.
