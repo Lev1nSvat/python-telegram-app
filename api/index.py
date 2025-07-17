@@ -203,9 +203,10 @@ class handler(BaseHTTPRequestHandler):
         print(f"Synchronous function: Received result: {result}")
         
         self.send_response(200)
-        self.send_header('Content-type', 'application/json')
+        #self.send_header('Content-type', 'application/json')
+        self.send_header('Content-type', 'text/plain')
         self.end_headers()
         response_data = {"message": result}
-        self.wfile.write(json.dumps(response_data).encode('utf-8'))
+        self.wfile.write(response_data).encode('utf-8')
 
     # You can also add other HTTP methods like do_POST, do_PUT, etc.
