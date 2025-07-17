@@ -197,6 +197,13 @@ class handler(BaseHTTPRequestHandler):
         content_length = int(self.headers.get('Content-Length'))
         post_body = self.rfile.read(content_length)
 
+        self.send_response(200)
+        #self.send_header('Content-type', 'application/json')
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+        #response_data = {"message": result}
+        #self.wfile.write(response_data).encode('utf-8')
+        
         #run the function BEFORE answering in a event loop
         print("Synchronous function: Calling async function...")
         result = asyncio.run(create_group_from_json_request(post_body))
