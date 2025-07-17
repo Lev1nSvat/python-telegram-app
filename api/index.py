@@ -206,7 +206,7 @@ class handler(BaseHTTPRequestHandler):
         #self.send_header('Content-type', 'application/json')
         self.send_header('Content-type', 'text/plain')
         self.end_headers()
-        response_data = {"message": result}
-        self.wfile.write(response_data).encode('utf-8')
+        #response_data = {"message": result}
+        #self.wfile.write(response_data).encode('utf-8')
 
     # You can also add other HTTP methods like do_POST, do_PUT, etc.
