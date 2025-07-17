@@ -96,7 +96,7 @@ async def create_group_from_json_request(json_data_str: str):
                 except UserNotMutualContact:
                     print(f"Warning: User ID {user_id} is not a mutual contact. Will attempt to add by ID anyway.")
                     #er_log.append(
-                        f"Warning: User ID {user_id} is not a mutual contact. Will attempt to add by ID anyway.")
+                        #f"Warning: User ID {user_id} is not a mutual contact. Will attempt to add by ID anyway.")
                     users_to_add_to_group_call.append(user_id)  # Still try to add the ID
                 except PeerIdInvalid:
                     print(f"Error: User ID {user_id} is invalid or does not exist.")
