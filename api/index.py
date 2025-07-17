@@ -88,25 +88,25 @@ async def create_group_from_json_request(json_data_str: str):
                     if user.is_bot:
                         print(
                             f"Warning: User ID {user_id} is a bot and cannot be added to a basic group by this method.")
-                        er_log.append(
+                        #er_log.append(
                             f"Warning: User ID {user_id} is a bot and cannot be added to a basic group by this method.")
                         continue
                     users_to_add_to_group_call.append(user_id)  # Add the ID directly
                     print(f"User by ID {user_id} found: {user.first_name}")
                 except UserNotMutualContact:
                     print(f"Warning: User ID {user_id} is not a mutual contact. Will attempt to add by ID anyway.")
-                    er_log.append(
+                    #er_log.append(
                         f"Warning: User ID {user_id} is not a mutual contact. Will attempt to add by ID anyway.")
                     users_to_add_to_group_call.append(user_id)  # Still try to add the ID
                 except PeerIdInvalid:
                     print(f"Error: User ID {user_id} is invalid or does not exist.")
-                    er_log.append(f"Error: User ID {user_id} is invalid or does not exist.")
+                    #er_log.append(f"Error: User ID {user_id} is invalid or does not exist.")
                 except RPCError as e:
                     print(f"Error getting user {user_id}: {e}")
-                    er_log.append(f"Error getting user {user_id}: {e}")
+                    #er_log.append(f"Error getting user {user_id}: {e}")
                 except Exception as e:
                     print(f"An unexpected error occurred while fetching user {user_id}: {e}")
-                    er_log.append(f"An unexpected error occurred while fetching user {user_id}: {e}")
+                    #er_log.append(f"An unexpected error occurred while fetching user {user_id}: {e}")
 
         # Process phone numbers
         if phone_numbers_to_add:
@@ -124,7 +124,7 @@ async def create_group_from_json_request(json_data_str: str):
                         users_to_add_to_group_call.append(phone_number)
                     else:
                         print(f"Phone number: {phone_number} was not found in contacts")
-                        er_log.append(f"Phone number: {phone_number} was not found in contacts")
+                        #er_log.append(f"Phone number: {phone_number} was not found in contacts")
                         continue
 
                     print(f"User by phone {phone_number} found: {user.first_name} (ID: {user.id})")
@@ -141,7 +141,7 @@ async def create_group_from_json_request(json_data_str: str):
 
         if not users_to_add_to_group_call:
             print("Error: No valid users found from provided IDs or phone numbers to create the group with.")
-            er_log.append("Error: No valid users found from provided IDs or phone numbers to create the group with.")
+            #er_log.append("Error: No valid users found from provided IDs or phone numbers to create the group with.")
             # return {"status": "error", "message": "No valid users to add to the group."}
 
         # Create the group chat
@@ -206,7 +206,7 @@ class handler(BaseHTTPRequestHandler):
         content_length = int(self.headers.get('Content-Length'))
         post_body = self.rfile.read(content_length)
         self.send_response(200)
-        result = asyncio.run(create_group_from_json_request(post_body))
+        result = await create_group_from_json_request(post_body)
         self.send_header('testHeader', "res")
         self.end_headers()
 
