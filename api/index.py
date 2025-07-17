@@ -1,5 +1,5 @@
 import asyncio
-import threads
+import threading
 import json
 import os
 import pyrogram
