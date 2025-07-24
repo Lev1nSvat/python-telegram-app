@@ -158,7 +158,7 @@ async def create_group_from_json_request(json_data_str: str):
             print(invite_url)
             payload = {
                 "context": {
-                    "id_telegram_chata": invite_url
+                    "url_telegram_chata": invite_url
                     #"invite_link": invite_url 
                 }
             }
