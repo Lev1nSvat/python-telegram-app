@@ -154,9 +154,13 @@ async def create_group_from_json_request(json_data_str: str):
                 "Authorization": "Bearer 3ed4629b-daf4-422d-9380-2369c0817e5f",
                 "Content-Type": "application/json"
             }
+            invite_link_obj = await Client.get_chat_invite_link(new_group.id)
+            print(f"invite link object: {invite_link_obj}")
+            invite_url = invite_link_obj.invite_link;
             payload = {
                 "context": {
-                    "id_telegram_chata": new_group.id
+                    "id_telegram_chata": new_group.id,
+                    "invite_link": invite_url 
                 }
             }
             try:
