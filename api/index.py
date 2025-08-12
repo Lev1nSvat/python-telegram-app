@@ -141,7 +141,7 @@ async def create_group_from_json_request(json_data_str: str):
         try:
             # Pyrogram's create_group function can directly accept a list of user IDs (int) or phone numbers (str).
             # By passing only these primitive types, we avoid potential binding issues with complex User objects.
-            new_group = await client.create_group(
+            new_group = await client.create_supergroup(
                 title=group_title,
                 users=users_to_add_to_group_call  # Pass the list of raw IDs/phone numbers
             )
