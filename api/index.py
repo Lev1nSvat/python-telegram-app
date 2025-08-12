@@ -143,7 +143,7 @@ async def create_group_from_json_request(json_data_str: str):
             # By passing only these primitive types, we avoid potential binding issues with complex User objects.
             new_group = await client.create_supergroup(
                 title=group_title,
-                users=users_to_add_to_group_call  # Pass the list of raw IDs/phone numbers
+                #users=users_to_add_to_group_call  # Pass the list of raw IDs/phone numbers
             )
             print(f"Group '{new_group.title}' (ID: {new_group.id}) created successfully!")
 
