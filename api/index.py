@@ -149,7 +149,7 @@ async def create_group_from_json_request(json_data_str: str):
 
             #send http post request to elma containing chat id
             print("sending post request to elma")
-            url = f"https://jungheinrich.elma365.ru/pub/v1/app/remont_elektrokomponentov_test/doska_zayavoktest/{app_id}/update"
+            url = f"https://jungheinrich.elma365.ru/pub/v1/app/remont_elektrokomponentov_test/zayavki_v_remonttest2/{app_id}/update"
             headers = {
                 "Authorization": "Bearer 3ed4629b-daf4-422d-9380-2369c0817e5f",
                 "Content-Type": "application/json"
@@ -158,8 +158,7 @@ async def create_group_from_json_request(json_data_str: str):
             print(invite_url)
             payload = {
                 "context": {
-                    "chat_url": invite_url
-                    #"invite_link": invite_url 
+                    "chat": invite_url
                 }
             }
             try:
