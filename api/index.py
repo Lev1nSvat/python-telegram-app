@@ -182,6 +182,9 @@ async def create_group_from_json_request(json_data_str: str):
                 print(f"Timeout error occurred: {timeout_err}")
             except requests.exceptions.RequestException as req_err:
                 print(f"An unexpected error occurred: {req_err}")
+
+            await client.send_message(new_group.id,f"\U0001F916 Чат создан автоматически.", disable_notification=True)
+            
             #users_in_chat = await client.get_chat_members(new_group.id)
             #users_in_chat = []
             #async for item in client.get_chat_members(new_group.id):
