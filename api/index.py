@@ -158,7 +158,8 @@ async def create_group_from_json_request(json_data_str: str):
             print(invite_url)
             payload = {
                 "context": {
-                    "chat": invite_url
+                    "chat": invite_url,
+                    "chat_url": invite_url
                 }
             }
             try:
