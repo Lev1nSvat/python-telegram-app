@@ -17,7 +17,7 @@ client = Client(
     api_id=API_ID,
     api_hash=API_HASH,
     phone_number=PHONE_NUMBER,
-    session_string="AgGfweEANz9DvqSqHEVlAX1MPs5PbCBaguduNvnN2lGkDduyUO_mbMVMlfZ0kV7Vh7trvpN7dEh134JCP6O2GkYeWEqkO3V2QCmXe2HSIw0qZUsCpxcvAi3q7GrdZU90Ge_vJRlzyxYTp3wgdlZxNZDubKQ4LTzxVXqcrZb3k6IsawzNVYUo3JS5anZIODUCF3SntR2JKnusUD7gO9Evdyjk9-vYQownFlkx1VMa6g_LiIQN-bC5V2LbOsgdbuqqTY0GgKXo2LhwUKP5oyJ_vYFHWeHx4dcmTnczVeI4gLsm6e5foWCb10ZNS3bUFKDahBBDWz3uF16wp4jdkMGVxAKdqZoFvAAAAAB28DzqAA",
+    session_string="AgGfweEAq1TfxCyh_laLnc1Tcgp_Q-vgA6B7ttDSJKrmJ_T4WCuOejOqZHQkKSVhj_VqOTrpRRWM0p-AFcMSXnUltL3rlD051Q4ACbtFvF9X7YZwXh3S3Y3XYysiF1U19fMlJcop1QrAP-GlHcK9SvCjUwbqFEz31vz6TkQCW_hIXO_E7lsMmlHI28WioRrFnFiCh-_UrY6AzOR0jC8a9TTHZqHWWYDsu33t0VBx1AO2sQkPzOQmNZhepW8k_6gL7nAB1pLfHgRY8omgNLq5fzM-maLNKi8hjSoGZ66s2g6y8kdYUupZQMp0hYaqhKP7JBqNzom_ZgmNBD8iiVNLpy1dGPnxUQAAAAB28DzqAA",
     in_memory=True  # Set to True if you don't want to save sessions to disk
 )
 
@@ -232,6 +232,7 @@ async def create_group_from_json_request(json_data_str: str):
         
         print("Stopping Pyrogram client...")
         await client.stop()
+        await client.log_out()
         print("Pyrogram client stopped.")
 
 class handler(BaseHTTPRequestHandler):
