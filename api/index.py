@@ -145,6 +145,8 @@ async def create_group_from_json_request(json_data_str: str):
                 title=group_title,
                 #users=users_to_add_to_group_call  # Pass the list of raw IDs/phone numbers
             )
+            await app.add_chat_members(new_group.id, users_to_add_to_group_call)
+            
             print(f"Group '{new_group.title}' (ID: {new_group.id}) created successfully!")
 
             #send http post request to elma containing chat id
