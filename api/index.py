@@ -229,10 +229,10 @@ async def create_group_from_json_request(json_data_str: str):
         return {"status": "error", "message": f"An unexpected error occurred: {e}"}
     finally:
         # Stop the Pyrogram client
-        if client.is_connected:
-            print("Stopping Pyrogram client...")
-            await client.stop()
-            print("Pyrogram client stopped.")
+        
+        print("Stopping Pyrogram client...")
+        await client.stop()
+        print("Pyrogram client stopped.")
 
 class handler(BaseHTTPRequestHandler):
     #async def do_GET(self):
