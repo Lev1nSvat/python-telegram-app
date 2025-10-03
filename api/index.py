@@ -21,6 +21,28 @@ client = Client(
     in_memory=True  # Set to True if you don't want to save sessions to disk
 )
 
+def normalize_phone_numbers(phone_numbers: List[str]) -> List[str]:
+    normalized_numbers = []
+    non_digit_pattern = re.compile(r'\D')
+
+    for number in phone_numbers:
+        digits_only = non_digit_pattern.sub('', number)
+        if len(digits_only) == 11:
+            if digits_only.startswith('8'):
+                normalized = '7' + digits_only[1:]
+            elif digits_only.startswith('7'):
+                normalized = digits_only
+            else:
+                normalized = digits_only
+        elif len(digits_only) == 10:
+             normalized = '7' + digits_only
+        
+        else: 
+            normalized = digits_only 
+            
+        normalized_numbers.append(normalized)
+        
+    return normalized_numbers
 
 async def create_group_from_json_request(json_data_str: str):
     """
@@ -46,7 +68,7 @@ async def create_group_from_json_request(json_data_str: str):
             user_ids_to_add = []
         phone_numbers_to_add_string = request_data.get("phone_numbers", "")
         phone_numbers_to_add = [number.strip() for number in phone_numbers_to_add_string.split(',')]
-
+        phone_numbers_to_add = normalize_phone_numbers(phone_numbers_to_add)
         if not group_title:
             print("Error: Invalid JSON format. 'title' is required.")
             return {"status": "error", "message": "Invalid request payload: 'title' missing."}
@@ -233,6 +255,7 @@ async def create_group_from_json_request(json_data_str: str):
         print("Stopping Pyrogram client...")
         await client.stop()
         await client.log_out()
+        await client.terminate()
         print("Pyrogram client stopped.")
 
 class handler(BaseHTTPRequestHandler):
